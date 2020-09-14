@@ -48,9 +48,6 @@ public class GladiatorFactory {
         int baseDex = RANDOM.nextInt(101 - 25) + 25;
         int baseLevel = RANDOM.nextInt(6 - 1) + 1;  // range: 1-5
 
-
-        System.out.println("random gladiatorType is: " + gladiatorType);
-
         switch (gladiatorType) {
             case 0:
                 return new Archer(getRandomName(), baseHp, baseSp, baseDex, baseLevel);

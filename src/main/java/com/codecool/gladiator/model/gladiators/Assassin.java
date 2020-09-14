@@ -22,6 +22,6 @@ public class Assassin extends Gladiator {
 
     @Override
     public String getFullName() {
-        return "Assassin + " + super.getName();
+        return "Assassin " + super.getName();
     }
 }

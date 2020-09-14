@@ -22,6 +22,6 @@ public class Archer extends Gladiator {
 
     @Override
     public String getFullName() {
-        return "Archer + " + super.getName();
+        return "Archer " + super.getName();
     }
 }
