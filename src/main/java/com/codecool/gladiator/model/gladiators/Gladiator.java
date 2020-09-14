@@ -40,17 +40,25 @@ public abstract class Gladiator {
      */
     protected abstract Multiplier getDexMultiplier();
 
+    private double availableHp = this.getBaseHp() * getLevel() * getHpMultiplier().getValue();
+    private double availableSp = this.getBaseSp() * getLevel() * getSpMultiplier().getValue();
+    private double availableDex = this.getBaseDex() * getLevel() * getDexMultiplier().getValue();
 
-    public double getAvailableHp() {
-        return this.getBaseHp() * getLevel() * getHpMultiplier().getValue();
+    public double getHp() {
+        // Todo: duplication.....
+        return this.getBaseHp();
     }
 
-    public double getAvailableSp() {
-        return this.getBaseSp() * getLevel() * getSpMultiplier().getValue();
+    public double getCurrentHp() {
+        return this.availableHp;
     }
 
-    public double getAvailableDex() {
-        return this.getBaseDex() * getLevel() * getDexMultiplier().getValue();
+    public double getSp() {
+        return this.availableSp;
+    }
+
+    public double getDex() {
+        return this.availableDex;
     }
 
 
@@ -107,5 +115,18 @@ public abstract class Gladiator {
     public int getLevel() {
         return this.level;
     }
+
+    public void decreaseHpBy(int decreaseValue) {
+        this.availableHp += decreaseValue;
+    }
+
+    public boolean isDead() {
+        return this.availableHp < 1 ? true : false;
+    }
+
+    public void healUp() {
+        this.availableHp++;
+    }
+
 
 }
