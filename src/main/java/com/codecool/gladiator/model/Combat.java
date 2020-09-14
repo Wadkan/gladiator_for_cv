@@ -34,8 +34,8 @@ public class Combat {
     int dexterityRange = (100 - 25) * 2;
     int chanceRange = 100 - 10;
 
-    private double getAttackerChance(double attackerDex, double opponentDex) {
-        return (attackerDex - opponentDex / dexterityRange * chanceRange + 10);
+    private double getAttackerChance(double attackerDex, double enemyDex) {
+        return (attackerDex - enemyDex / dexterityRange * chanceRange + 10);
     }
 
     /**
@@ -69,27 +69,42 @@ public class Combat {
         // choose starter gladiator:
         int whoseTheFirstTurn = RANDOM.getIntSmallerOrEqualsTo(1);
         Gladiator attacker = whoseTheFirstTurn == 0 ? gladiator1 : gladiator2;
-        Gladiator opponent = toggleGladiator(attacker);
+        Gladiator enemy = toggleGladiator(attacker);
+        Gladiator winner = null;
 
         // ATTACK
         while (true) {
             // hit or miss
             double chance = attacker.getChance();   // get chance
-            double damage = attacker.getSp() * RANDOM.getDoubleBetweenInclusive(0.1, 0.5);   // get attacker strength
+            int damage = (int) (attacker.getSp() * RANDOM.getDoubleBetweenInclusive(0.1, 0.5));   // get attacker strength
+            int numberForChance = RANDOM.getIntBetweenInclusive(1, 100);
 
+            String logMessage = "";
+            if (0 <= numberForChance && numberForChance <= chance) {     // hit the enemy
+                enemy.decreaseHpBy(damage);
+                logMessage = String.format("%s deals %d damage", attacker.getName(), damage);
+            } else {
+                logMessage = String.format("%s missed", attacker.getName());
+            }
+            combatLog.add(logMessage);
 
             // check the winner after each turn
             if (gladiator1.getCurrentHp() < 0) {
-                return gladiator2;
+                logMessage = String.format("%s has died, %s wins!", gladiator1.getName(), gladiator2.getName());
+                combatLog.add(logMessage);
+                winner = gladiator2;
+                return winner;
             } else if (gladiator2.getCurrentHp() < 0) {
-                return gladiator1;
+                logMessage = String.format("%s has died, %s wins!", gladiator2.getName(), gladiator1.getName());
+                combatLog.add(logMessage);
+                winner = gladiator1;
+                return winner;
             }
 
             // toggle attacker and gladiator for the next turn
             attacker = toggleGladiator(attacker);
-            opponent = toggleGladiator(attacker);
+            enemy = toggleGladiator(attacker);
         }
-
     }
 
     public Gladiator getGladiator1() {
