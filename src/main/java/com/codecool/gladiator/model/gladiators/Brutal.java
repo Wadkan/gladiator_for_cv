@@ -6,40 +6,14 @@ public class Brutal extends Gladiator {
     }
 
     @Override
-    protected Multiplier getHpMultiplier() {
-        // Todo
-        return null;
-    }
+    protected Multiplier getHpMultiplier() {return Multiplier.High;}
 
     @Override
-    protected Multiplier getSpMultiplier() {
-        // Todo
-        return null;
-    }
+    protected Multiplier getSpMultiplier() {return Multiplier.High;}
 
     @Override
-    protected Multiplier getDexMultiplier() {
-        // Todo
-        return null;
-    }
+    protected Multiplier getDexMultiplier() {return Multiplier.Low;}
 
     @Override
-    public int getAvailableHp() {
-        return this.getBaseHp() * getLevel();   // Todo * getHpMultiplier()
-    }
-
-    @Override
-    public int getAvailableSp() {
-        return this.getBaseSp() * getLevel(); // Todo * getSpMultiplier()
-    }
-
-    @Override
-    public int getAvailableDex() {
-        return this.getBaseDex() * getLevel(); // Todo * getDexMultiplier()
-    }
-
-    @Override
-    public String getFullName() {
-        return "Brutal + " + super.getName();
-    }
+    public String getFullName() {return "Brutal + " + super.getName();}
 }

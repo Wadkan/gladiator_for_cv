@@ -41,11 +41,18 @@ public abstract class Gladiator {
     protected abstract Multiplier getDexMultiplier();
 
 
-    public abstract int getAvailableHp();
+    public double getAvailableHp() {
+        return this.getBaseHp() * getLevel() * getHpMultiplier().getValue();
+    }
 
-    public abstract int getAvailableSp();
+    public double getAvailableSp() {
+        return this.getBaseSp() * getLevel() * getSpMultiplier().getValue();
+    }
 
-    public abstract int getAvailableDex();
+    public double getAvailableDex() {
+        return this.getBaseDex() * getLevel() * getDexMultiplier().getValue();
+    }
+
 
     public int getBaseHp() {
         return baseHp;
@@ -74,7 +81,6 @@ public abstract class Gladiator {
      * @return the full name
      */
     public String getFullName() {
-        // Todo ?
         return name;
     }
 
