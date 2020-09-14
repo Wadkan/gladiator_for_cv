@@ -43,10 +43,10 @@ public class GladiatorFactory {
     public Gladiator generateRandomGladiator() {
 //        RandomUtils RANDOM = new RandomUtils();
         int gladiatorType = RANDOM.nextInt(5);
-        int baseHp = RANDOM.nextInt(101 - 25) + 25;
+        int baseHp = RANDOM.nextInt(101 - 25) + 25; // range: 25-100
         int baseSp = RANDOM.nextInt(101 - 25) + 25;
         int baseDex = RANDOM.nextInt(101 - 25) + 25;
-        int baseLevel = RANDOM.nextInt(6 - 1) + 1;
+        int baseLevel = RANDOM.nextInt(6 - 1) + 1;  // range: 1-5
 
 
         System.out.println("random gladiatorType is: " + gladiatorType);

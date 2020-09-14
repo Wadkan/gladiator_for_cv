@@ -25,6 +25,16 @@ public abstract class Gladiator {
         this.level = level;
     }
 
+    private double chance;
+
+    public void setChance(double chance) {
+        this.chance = chance;
+    }
+
+    public double getChance() {
+        return chance;
+    }
+
     /**
      * @return HP multiplier of the gladiator subclass
      */
