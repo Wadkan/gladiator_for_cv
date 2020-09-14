@@ -87,7 +87,7 @@ public class Tournament {
      * @param value the value to be added to the tree
      */
     public void add(Contestants value) {
-        // Todo
+        add(value);
     }
 
     /**

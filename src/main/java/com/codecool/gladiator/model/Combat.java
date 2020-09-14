@@ -6,13 +6,11 @@ import com.codecool.gladiator.util.RandomUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Combat class, used for simulating fights between pairs of gladiators
  */
 public class Combat {
-    //    private static Random RANDOM = new Random();
     private static RandomUtils RANDOM = new RandomUtils();
 
     private final Gladiator gladiator1;
