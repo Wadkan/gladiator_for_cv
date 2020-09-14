@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GladiatorFactory {
+    Random RANDOM = new Random();
 
     private List<String> names;
 
@@ -28,8 +29,8 @@ public class GladiatorFactory {
      * @return gladiator name
      */
     private String getRandomName() {
-        // Todo
-        return "Brutus";
+        int randomNameRowNumber = RANDOM.nextInt(names.size());
+        return names.get(randomNameRowNumber);
     }
 
     /**
@@ -40,7 +41,6 @@ public class GladiatorFactory {
      * @return new Gladiator
      */
     public Gladiator generateRandomGladiator() {
-        Random RANDOM = new Random();
 //        RandomUtils RANDOM = new RandomUtils();
         int gladiatorType = RANDOM.nextInt(5);
         int baseHp = RANDOM.nextInt(101 - 25) + 25;
