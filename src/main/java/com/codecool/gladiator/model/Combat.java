@@ -91,11 +91,15 @@ public class Combat {
                 logMessage = String.format("%s has died, %s wins!", gladiator1.getName(), gladiator2.getName());
                 combatLog.add(logMessage);
                 winner = gladiator2;
-                return winner;
-            } else if (gladiator2.getAvailableHp() < 0) {
+            }
+            if (gladiator2.getAvailableHp() < 0) {
                 logMessage = String.format("%s has died, %s wins!", gladiator2.getName(), gladiator1.getName());
                 combatLog.add(logMessage);
                 winner = gladiator1;
+            }
+            if (winner != null) {
+                gladiator1.healUp();
+                gladiator2.healUp();
                 return winner;
             }
 
