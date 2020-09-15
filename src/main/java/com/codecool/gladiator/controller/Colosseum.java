@@ -60,13 +60,17 @@ public class Colosseum {
         return gladiatorsInPairs;
     }
 
-//    private List<Tournament> createTournamentList(List<Contestants> contestants) {
-//        for (Contestants contestant : contestants) {
-//            Tournament aTournament = new Tournament(contestants);
-//            tournamentTree.add(aTournament);
-//        }
-//        return tournamentTree;
-//    }
+
+    private void doTheCombat(Tournament actualLevel) {
+        // LEVEL 2 – the deepest
+        Combat combatLeft;
+        Combat combatRight;
+
+        combatLeft = new Combat(actualLevel.getLeftBranch().getContestants());
+        combatRight = new Combat(actualLevel.getRightBranch().getContestants());
+        Contestants winners = new Contestants(simulateCombat(combatLeft), simulateCombat(combatRight));
+        actualLevel.setContestants(winners);
+    }
 
     private Gladiator getChampion(Tournament tournament) {
         // Todo - call simulateCombat as many times as needed
@@ -80,29 +84,43 @@ public class Colosseum {
         Combat combatLeft;
         Combat combatRight;
 
-        while (continoueTheTournament) {
-            if (tournament.getContestants() != null) {       // if final tournament
-                Combat combat = new Combat(tournament.getContestants());
-                return simulateCombat(combat);
-            }
+        int size = tournament.size();
+        if (size == 2) {
+            // LEVEL 2 – the deepest
+            combatLeft = new Combat(tournament.getLeftBranch().getContestants());
+            combatRight = new Combat(tournament.getRightBranch().getContestants());
+            Contestants winners = new Contestants(simulateCombat(combatLeft), simulateCombat(combatRight));
+            tournament.setContestants(winners);
 
-            actualLevel = tournament;
-            noContestantsTheLevelBelow = true;
-            while (noContestantsTheLevelBelow) {
-                actualLeftContestants = actualLevel.getLeftBranch().getContestants();
-                actualRightContestants = actualLevel.getRightBranch().getContestants();
-                if (actualLeftContestants != null && actualRightContestants != null) {    // check the leftbranch and rightbranch for contestants
-                    combatLeft = new Combat(actualLeftContestants);
-                    combatRight = new Combat(actualRightContestants);
-                    Contestants winners = new Contestants(simulateCombat(combatLeft), simulateCombat(combatRight));
-                    actualLevel.setContestants(winners);
-                } else {                                             // there are contestants in THIS level
-                    actualLevel = tournament.getLeftBranch();
-                    left = (left == true) ? false : true;
-                }
-            }
-        }
-        return null;
+            // LEVEL 1 – the final
+            Combat combat = new Combat(tournament.getContestants());
+            return simulateCombat(combat);
+        } else return null;
+
+
+//        while (continoueTheTournament) {
+//            if (tournament.getContestants() != null) {       // if final tournament
+//                Combat combat = new Combat(tournament.getContestants());
+//                return simulateCombat(combat);
+//            }
+//
+//            actualLevel = tournament;
+//            noContestantsTheLevelBelow = true;
+//            while (noContestantsTheLevelBelow) {
+//                actualLeftContestants = actualLevel.getLeftBranch().getContestants();
+//                actualRightContestants = actualLevel.getRightBranch().getContestants();
+//                if (actualLeftContestants != null && actualRightContestants != null) {    // check the leftbranch and rightbranch for contestants
+//                    combatLeft = new Combat(actualLeftContestants);
+//                    combatRight = new Combat(actualRightContestants);
+//                    Contestants winners = new Contestants(simulateCombat(combatLeft), simulateCombat(combatRight));
+//                    actualLevel.setContestants(winners);
+//                } else {                                             // there are contestants in THIS level
+//                    actualLevel = tournament.getLeftBranch();
+//                    left = (left == true) ? false : true;
+//                }
+//            }
+//        }
+//        return null;
     }
 
     private Gladiator simulateCombat(Combat combat) {
