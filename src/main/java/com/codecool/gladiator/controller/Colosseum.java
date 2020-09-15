@@ -62,7 +62,6 @@ public class Colosseum {
 
 
     private void doTheCombat(Tournament actualLevel) {
-        // LEVEL 2 – the deepest
         Combat combatLeft;
         Combat combatRight;
 
@@ -75,9 +74,6 @@ public class Colosseum {
     private Gladiator getChampion(Tournament tournament) {
         // Todo - call simulateCombat as many times as needed
 
-        boolean continoueTheTournament = true;
-        boolean noContestantsTheLevelBelow;
-        boolean left = true;
         Tournament actualLevel;
         Contestants actualLeftContestants;
         Contestants actualRightContestants;
@@ -85,42 +81,12 @@ public class Colosseum {
         Combat combatRight;
 
         int size = tournament.size();
-        if (size == 2) {
-            // LEVEL 2 – the deepest
-            combatLeft = new Combat(tournament.getLeftBranch().getContestants());
-            combatRight = new Combat(tournament.getRightBranch().getContestants());
-            Contestants winners = new Contestants(simulateCombat(combatLeft), simulateCombat(combatRight));
-            tournament.setContestants(winners);
 
-            // LEVEL 1 – the final
-            Combat combat = new Combat(tournament.getContestants());
-            return simulateCombat(combat);
-        } else return null;
+        doTheCombat(tournament);
 
-
-//        while (continoueTheTournament) {
-//            if (tournament.getContestants() != null) {       // if final tournament
-//                Combat combat = new Combat(tournament.getContestants());
-//                return simulateCombat(combat);
-//            }
-//
-//            actualLevel = tournament;
-//            noContestantsTheLevelBelow = true;
-//            while (noContestantsTheLevelBelow) {
-//                actualLeftContestants = actualLevel.getLeftBranch().getContestants();
-//                actualRightContestants = actualLevel.getRightBranch().getContestants();
-//                if (actualLeftContestants != null && actualRightContestants != null) {    // check the leftbranch and rightbranch for contestants
-//                    combatLeft = new Combat(actualLeftContestants);
-//                    combatRight = new Combat(actualRightContestants);
-//                    Contestants winners = new Contestants(simulateCombat(combatLeft), simulateCombat(combatRight));
-//                    actualLevel.setContestants(winners);
-//                } else {                                             // there are contestants in THIS level
-//                    actualLevel = tournament.getLeftBranch();
-//                    left = (left == true) ? false : true;
-//                }
-//            }
-//        }
-//        return null;
+        // LEVEL 1 – the final
+        Combat combat = new Combat(tournament.getContestants());
+        return simulateCombat(combat);
     }
 
     private Gladiator simulateCombat(Combat combat) {
