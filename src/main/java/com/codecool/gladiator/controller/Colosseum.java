@@ -29,10 +29,10 @@ public class Colosseum {
      */
     public void runSimulation() {
         var numberOfGladiators = (int) Math.pow(2, stages);
-        var gladiators = generateGladiators(numberOfGladiators);
-        var contestants = splitGladiatorsIntoPairs(gladiators);
-        var tournamentTree = new Tournament(contestants);
-        var champion = getChampion(tournamentTree);
+        var gladiators = generateGladiators(numberOfGladiators);    // gladiators SOLO
+        var contestants = splitGladiatorsIntoPairs(gladiators);   // list of gladiator PAIRs
+        var tournamentTree = new Tournament(contestants);                        // tree of pairs
+        var champion = getChampion(tournamentTree);                     // one winner
         announceChampion(champion);
 
         // The following line chains the above lines:
@@ -44,13 +44,12 @@ public class Colosseum {
         for (int i = 0; i < numberOfGladiators; i++) {
             gladiators.add(gladiatorFactory.generateRandomGladiator());
         }
-
         introduceGladiators(gladiators);
         return gladiators;
     }
 
     private List<Contestants> splitGladiatorsIntoPairs(List<Gladiator> gladiators) {
-        // Todo
+
         return new LinkedList<>();
     }
 
