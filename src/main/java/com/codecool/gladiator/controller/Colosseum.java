@@ -76,7 +76,10 @@ public class Colosseum {
         Contestants actualRightContestants;
 
         for (int i = actualSize; i > 1; i--) {
-            doTheCombat(actualLevel);
+            if (i == 2) {
+                System.out.println("-------------> SIZE: " + i);
+                doTheCombat(actualLevel);
+            }
         }
     }
 

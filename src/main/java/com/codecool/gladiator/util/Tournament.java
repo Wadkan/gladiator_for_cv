@@ -33,7 +33,11 @@ public class Tournament {
      * @param values the list of values to be added to the tree
      */
     public Tournament(List<Contestants> values) {
-        addAll(values);
+        if (values.size() == 1) {
+            add(values.get(0));
+        } else {
+            addAll(values);
+        }
     }
 
     /**
@@ -42,7 +46,7 @@ public class Tournament {
      * @return the value
      */
     public Contestants getContestants() {
-        return contestants;
+        return this.contestants;
     }
 
     /**
@@ -91,6 +95,14 @@ public class Tournament {
         size = 1;
     }
 
+    private void recursiveAdd(Tournament actual, List<Contestants> values) {
+        for (int i = 2; i <= size; i++) {
+            leftBranch = new Tournament(values.get(i - 2));
+            rightBranch = new Tournament(values.get(i - 1));
+        }
+    }
+
+
     /**
      * Adds multiple values to the tree
      *
@@ -99,25 +111,29 @@ public class Tournament {
     public void addAll(List<Contestants> values) {
         contestants = null; // this will be the winner at the end
         size = values.size();
+        System.out.println("SIZE ASDFASDF: " + size);
 
-        if (size == 2) {
-            leftBranch = new Tournament(values.get(0));
-            rightBranch = new Tournament(values.get(1));
-        } else if (size == 4) {
-            leftBranch.leftBranch = new Tournament(values.get(0));
-            leftBranch.rightBranch = new Tournament(values.get(1));
-            rightBranch.leftBranch = new Tournament(values.get(3));
-            rightBranch.rightBranch = new Tournament(values.get(4));
-        } else if (size == 8) {
-            leftBranch.leftBranch.leftBranch = new Tournament(values.get(0));
-            leftBranch.leftBranch.rightBranch = new Tournament(values.get(1));
-            leftBranch.rightBranch.leftBranch = new Tournament(values.get(2));
-            leftBranch.rightBranch.rightBranch = new Tournament(values.get(3));
-            rightBranch.leftBranch.leftBranch = new Tournament(values.get(4));
-            rightBranch.leftBranch.rightBranch = new Tournament(values.get(5));
-            rightBranch.rightBranch.leftBranch = new Tournament(values.get(6));
-            rightBranch.rightBranch.rightBranch = new Tournament(values.get(7));
-        }
+        recursiveAdd(this, values);
+
+
+//        if (size == 2) {
+//            leftBranch = new Tournament(values.get(0));
+//            rightBranch = new Tournament(values.get(1));
+//        } else if (size == 4) {
+//            leftBranch.leftBranch = new Tournament(values.get(0));
+//            leftBranch.rightBranch = new Tournament(values.get(1));
+//            rightBranch.leftBranch = new Tournament(values.get(3));
+//            rightBranch.rightBranch = new Tournament(values.get(4));
+//        } else if (size == 8) {
+//            leftBranch.leftBranch.leftBranch = new Tournament(values.get(0));
+//            leftBranch.leftBranch.rightBranch = new Tournament(values.get(1));
+//            leftBranch.rightBranch.leftBranch = new Tournament(values.get(2));
+//            leftBranch.rightBranch.rightBranch = new Tournament(values.get(3));
+//            rightBranch.leftBranch.leftBranch = new Tournament(values.get(4));
+//            rightBranch.leftBranch.rightBranch = new Tournament(values.get(5));
+//            rightBranch.rightBranch.leftBranch = new Tournament(values.get(6));
+//            rightBranch.rightBranch.rightBranch = new Tournament(values.get(7));
+//        }
 
         // left = (left == true) ? false : true;
 
