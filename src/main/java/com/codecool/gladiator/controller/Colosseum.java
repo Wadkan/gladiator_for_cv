@@ -9,6 +9,7 @@ import com.codecool.gladiator.view.Viewable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Colosseum {
 
@@ -18,6 +19,8 @@ public class Colosseum {
     private final Viewable view;
     private final GladiatorFactory gladiatorFactory;
     private int stages = 2;
+
+    List<Tournament> tournamentTree = null;
 
     public Colosseum(Viewable view, GladiatorFactory gladiatorFactory) {
         this.view = view;
@@ -32,11 +35,6 @@ public class Colosseum {
         var gladiators = generateGladiators(numberOfGladiators);    // gladiators SOLO
         var contestants = splitGladiatorsIntoPairs(gladiators);   // list of gladiator PAIRs - contestant - a pair
         var tournamentTree = new Tournament(contestants);                        // tree of pairs
-
-        System.out.println(tournamentTree.size());
-        System.out.println(tournamentTree.getLeftBranch().size());
-        System.out.println(tournamentTree.getRightBranch().size());
-
         var champion = getChampion(tournamentTree);                     // one winner
         announceChampion(champion);
 
@@ -62,8 +60,48 @@ public class Colosseum {
         return gladiatorsInPairs;
     }
 
+//    private List<Tournament> createTournamentList(List<Contestants> contestants) {
+//        for (Contestants contestant : contestants) {
+//            Tournament aTournament = new Tournament(contestants);
+//            tournamentTree.add(aTournament);
+//        }
+//        return tournamentTree;
+//    }
+
     private Gladiator getChampion(Tournament tournament) {
         // Todo - call simulateCombat as many times as needed
+
+        boolean continoueTheTournament = true;
+        boolean noContestantsTheLevelBelow;
+        boolean left = true;
+        Tournament actualLevel;
+        Contestants actualLeftContestants;
+        Contestants actualRightContestants;
+        Combat combatLeft;
+        Combat combatRight;
+
+        while (continoueTheTournament) {
+            if (tournament.getContestants() != null) {       // if final tournament
+                Combat combat = new Combat(tournament.getContestants());
+                return simulateCombat(combat);
+            }
+
+            actualLevel = tournament;
+            noContestantsTheLevelBelow = true;
+            while (noContestantsTheLevelBelow) {
+                actualLeftContestants = actualLevel.getLeftBranch().getContestants();
+                actualRightContestants = actualLevel.getRightBranch().getContestants();
+                if (actualLeftContestants != null && actualRightContestants != null) {    // check the leftbranch and rightbranch for contestants
+                    combatLeft = new Combat(actualLeftContestants);
+                    combatRight = new Combat(actualRightContestants);
+                    Contestants winners = new Contestants(simulateCombat(combatLeft), simulateCombat(combatRight));
+                    actualLevel.setContestants(winners);
+                } else {                                             // there are contestants in THIS level
+                    actualLevel = tournament.getLeftBranch();
+                    left = (left == true) ? false : true;
+                }
+            }
+        }
         return null;
     }
 
@@ -73,10 +111,11 @@ public class Colosseum {
         announceCombat(gladiator1, gladiator2);
 
         // Todo
-
+        Gladiator winner = combat.simulate();
+        Gladiator loser = winner == gladiator1 ? gladiator2 : gladiator1;
         displayCombatLog(combat);
-        announceWinnerAndLoser(gladiator1, gladiator2);
-        return gladiator1;
+        announceWinnerAndLoser(winner, loser);
+        return winner;
     }
 
     public void welcome() {
@@ -99,8 +138,8 @@ public class Colosseum {
 
     private void announceCombat(Gladiator gladiator1, Gladiator gladiator2) {
         view.display(String.format("\nDuel %s versus %s:", gladiator1.getName(), gladiator2.getName()));
-        view.display(String.format(" - %s", gladiator1));
-        view.display(String.format(" - %s", gladiator2));
+        view.display(String.format(" - %s (%s/%s HP, %s SP, %s DEX, %s LVL) ", gladiator1.getFullName(), gladiator1.getCurrentHp(), gladiator1.getBaseHp(), gladiator1.getSp(), gladiator1.getDex(), gladiator1.getLevel()));
+        view.display(String.format(" - %s (%s/%s HP, %s SP, %s DEX, %s LVL) ", gladiator2.getFullName(), gladiator2.getCurrentHp(), gladiator2.getBaseHp(), gladiator2.getSp(), gladiator2.getDex(), gladiator2.getLevel()));
     }
 
     private void displayCombatLog(Combat combat) {

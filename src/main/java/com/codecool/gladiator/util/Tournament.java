@@ -88,7 +88,7 @@ public class Tournament {
      */
     public void add(Contestants value) {
         contestants = value;
-        size++;
+        size = 1;
     }
 
     /**
@@ -98,10 +98,43 @@ public class Tournament {
      */
     public void addAll(List<Contestants> values) {
         contestants = null; // this will be the winner at the end
+        size = values.size();
 
-        leftBranch.add(values.get(0));
-        rightBranch.add(values.get(1));
-        size += 2;
-        left = (left == true) ? false : true;
+//        Tournament actualBranch;
+
+        if (size == 2) {
+            leftBranch = new Tournament(values.get(0));
+            rightBranch = new Tournament(values.get(1));
+        } else if (size == 4) {
+            leftBranch.leftBranch = new Tournament(values.get(0));
+            leftBranch.rightBranch = new Tournament(values.get(1));
+            rightBranch.leftBranch = new Tournament(values.get(3));
+            rightBranch.rightBranch = new Tournament(values.get(4));
+        } else if (size == 8) {
+            leftBranch.leftBranch.leftBranch = new Tournament(values.get(0));
+            leftBranch.leftBranch.rightBranch = new Tournament(values.get(1));
+            leftBranch.rightBranch.leftBranch = new Tournament(values.get(2));
+            leftBranch.rightBranch.rightBranch = new Tournament(values.get(3));
+            rightBranch.leftBranch.leftBranch = new Tournament(values.get(4));
+            rightBranch.leftBranch.rightBranch = new Tournament(values.get(5));
+            rightBranch.rightBranch.leftBranch = new Tournament(values.get(6));
+            rightBranch.rightBranch.rightBranch = new Tournament(values.get(7));
+        }
+
+//        leftBranch = leftBranch;
+//        rightBranch = rightBranch;
+//
+//        for (int i = 0; i < size; i++) {
+//            if (left) {
+//                actualBranch = this.leftBranch;
+//            } else {
+//                actualBranch = this.rightBranch;
+//            }
+//            left = (left == true) ? false : true;
+//        }
+//
+//        rightBranch.add(contestants);
+
+        // left = (left == true) ? false : true;
     }
 }
