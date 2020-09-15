@@ -100,8 +100,6 @@ public class Tournament {
         contestants = null; // this will be the winner at the end
         size = values.size();
 
-//        Tournament actualBranch;
-
         if (size == 2) {
             leftBranch = new Tournament(values.get(0));
             rightBranch = new Tournament(values.get(1));
@@ -121,20 +119,17 @@ public class Tournament {
             rightBranch.rightBranch.rightBranch = new Tournament(values.get(7));
         }
 
-//        leftBranch = leftBranch;
-//        rightBranch = rightBranch;
-//
+        // left = (left == true) ? false : true;
+
+
+//        Tournament actualBranch;
 //        for (int i = 0; i < size; i++) {
 //            if (left) {
-//                actualBranch = this.leftBranch;
+//                leftBranch = new Tournament(values.get(i));
 //            } else {
-//                actualBranch = this.rightBranch;
+//                rightBranch = new Tournament(values.get(i));
 //            }
 //            left = (left == true) ? false : true;
 //        }
-//
-//        rightBranch.add(contestants);
-
-        // left = (left == true) ? false : true;
     }
 }

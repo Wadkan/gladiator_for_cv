@@ -40,7 +40,7 @@ public class Combat {
      * toggle gladiator between gladiator1 and gladiator2
      */
     private Gladiator toggleGladiator(Gladiator gladiator) {
-        return (gladiator1 == gladiator1) ? gladiator2 : gladiator1;
+        return (gladiator == gladiator1) ? gladiator2 : gladiator1;
     }
 
     /**
@@ -60,7 +60,7 @@ public class Combat {
             return gladiator1;
         }
 
-        // calculate change for hit in percent
+        // calculate chance for hit in percent
         gladiator1.setChance(getAttackerChance(gladiator1.getDex(), gladiator2.getDex()));
         gladiator2.setChance(getAttackerChance(gladiator2.getDex(), gladiator1.getDex()));
 
@@ -75,10 +75,10 @@ public class Combat {
             // hit or miss
             double chance = attacker.getChance();   // get chance
             int damage = (int) (attacker.getSp() * RANDOM.getDoubleBetweenInclusive(0.1, 0.5));   // get attacker strength
-            int numberForChance = RANDOM.getIntBetweenInclusive(1, 100);
+            double numberForChance = RANDOM.getIntBetweenInclusive(1, 100);
 
             String logMessage = "";
-            if (0 <= numberForChance && numberForChance <= chance) {     // hit the enemy
+            if (numberForChance <= chance) {     // hit the enemy
                 enemy.decreaseHpBy(damage);
                 logMessage = String.format("%s deals %d damage", attacker.getName(), damage);
             } else {
@@ -87,12 +87,12 @@ public class Combat {
             combatLog.add(logMessage);
 
             // check the winner after each turn
-            if (gladiator1.getCurrentHp() < 0) {
+            if (gladiator1.getAvailableHp() < 0) {
                 logMessage = String.format("%s has died, %s wins!", gladiator1.getName(), gladiator2.getName());
                 combatLog.add(logMessage);
                 winner = gladiator2;
                 return winner;
-            } else if (gladiator2.getCurrentHp() < 0) {
+            } else if (gladiator2.getAvailableHp() < 0) {
                 logMessage = String.format("%s has died, %s wins!", gladiator2.getName(), gladiator1.getName());
                 combatLog.add(logMessage);
                 winner = gladiator1;

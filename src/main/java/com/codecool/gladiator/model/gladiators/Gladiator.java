@@ -8,6 +8,10 @@ public abstract class Gladiator {
     private final int baseDex;
     private int level;
 
+    private double availableHp;
+    private double availableSp;
+    private double availableDex;
+
     /**
      * Constructor for Gladiators
      *
@@ -23,6 +27,11 @@ public abstract class Gladiator {
         this.baseSp = baseSp;
         this.baseDex = baseDex;
         this.level = level;
+
+        this.availableHp = this.getBaseHp() * getLevel() * getHpMultiplier().getValue();
+        this.availableSp = this.getBaseSp() * getLevel() * getSpMultiplier().getValue();
+        this.availableDex = this.getBaseDex() * getLevel() * getDexMultiplier().getValue();
+
     }
 
     private double chance;
@@ -50,17 +59,12 @@ public abstract class Gladiator {
      */
     protected abstract Multiplier getDexMultiplier();
 
-    private double availableHp = this.getBaseHp() * getLevel() * getHpMultiplier().getValue();
-    private double currentHp = availableHp;
-    private double availableSp = this.getBaseSp() * getLevel() * getSpMultiplier().getValue();
-    private double availableDex = this.getBaseDex() * getLevel() * getDexMultiplier().getValue();
-
     public double getHp() {
         // Todo: duplication.....
         return this.getBaseHp();
     }
 
-    public double getCurrentHp() {
+    public double getAvailableHp() {
         return this.availableHp;
     }
 
@@ -128,15 +132,15 @@ public abstract class Gladiator {
     }
 
     public void decreaseHpBy(int decreaseValue) {
-        this.currentHp += decreaseValue;
+        this.availableHp -= decreaseValue;
     }
 
     public boolean isDead() {
-        return this.currentHp < 1 ? true : false;
+        return this.availableHp < 1 ? true : false;
     }
 
     public void healUp() {
-        this.currentHp = this.availableHp;
+        this.availableHp = this.baseHp;
     }
 
 

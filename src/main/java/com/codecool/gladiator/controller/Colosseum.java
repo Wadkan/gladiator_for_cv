@@ -111,6 +111,7 @@ public class Colosseum {
         announceCombat(gladiator1, gladiator2);
 
         // Todo
+        System.out.println("before combat");
         Gladiator winner = combat.simulate();
         Gladiator loser = winner == gladiator1 ? gladiator2 : gladiator1;
         displayCombatLog(combat);
@@ -138,8 +139,8 @@ public class Colosseum {
 
     private void announceCombat(Gladiator gladiator1, Gladiator gladiator2) {
         view.display(String.format("\nDuel %s versus %s:", gladiator1.getName(), gladiator2.getName()));
-        view.display(String.format(" - %s (%s/%s HP, %s SP, %s DEX, %s LVL) ", gladiator1.getFullName(), gladiator1.getCurrentHp(), gladiator1.getBaseHp(), gladiator1.getSp(), gladiator1.getDex(), gladiator1.getLevel()));
-        view.display(String.format(" - %s (%s/%s HP, %s SP, %s DEX, %s LVL) ", gladiator2.getFullName(), gladiator2.getCurrentHp(), gladiator2.getBaseHp(), gladiator2.getSp(), gladiator2.getDex(), gladiator2.getLevel()));
+        view.display(String.format(" - %s (%s/%s HP, %s SP, %s DEX, %s LVL) ", gladiator1.getFullName(), gladiator1.getAvailableHp(), gladiator1.getBaseHp(), gladiator1.getSp(), gladiator1.getDex(), gladiator1.getLevel()));
+        view.display(String.format(" - %s (%s/%s HP, %s SP, %s DEX, %s LVL) ", gladiator2.getFullName(), gladiator2.getAvailableHp(), gladiator2.getBaseHp(), gladiator2.getSp(), gladiator2.getDex(), gladiator2.getLevel()));
     }
 
     private void displayCombatLog(Combat combat) {

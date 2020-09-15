@@ -15,8 +15,8 @@ public class RandomUtils {
     }
 
     public double getDoubleBetweenInclusive(double minDouble, double maxDouble) {
-        int min = (int) maxDouble * 10;
-        int max = (int) maxDouble * 10;
+        int min = (int) (minDouble * 10);
+        int max = (int) (maxDouble * 10);
         return (double)(RANDOM.nextInt((max - min) + 1) + min) / 10;
     }
 }
