@@ -88,6 +88,7 @@ public class Tournament {
      */
     public void add(Contestants value) {
         contestants = value;
+        size++;
     }
 
     /**
@@ -96,8 +97,11 @@ public class Tournament {
      * @param values the list of values to be added to the tree
      */
     public void addAll(List<Contestants> values) {
-        for (Contestants value : values) {
-            add(value);
-        }
+        contestants = null; // this will be the winner at the end
+
+        leftBranch.add(values.get(0));
+        rightBranch.add(values.get(1));
+        size += 2;
+        left = (left == true) ? false : true;
     }
 }

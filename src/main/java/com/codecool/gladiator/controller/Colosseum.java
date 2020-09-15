@@ -30,8 +30,13 @@ public class Colosseum {
     public void runSimulation() {
         var numberOfGladiators = (int) Math.pow(2, stages);
         var gladiators = generateGladiators(numberOfGladiators);    // gladiators SOLO
-        var contestants = splitGladiatorsIntoPairs(gladiators);   // list of gladiator PAIRs
+        var contestants = splitGladiatorsIntoPairs(gladiators);   // list of gladiator PAIRs - contestant - a pair
         var tournamentTree = new Tournament(contestants);                        // tree of pairs
+
+        System.out.println(tournamentTree.size());
+        System.out.println(tournamentTree.getLeftBranch().size());
+        System.out.println(tournamentTree.getRightBranch().size());
+
         var champion = getChampion(tournamentTree);                     // one winner
         announceChampion(champion);
 
@@ -49,8 +54,12 @@ public class Colosseum {
     }
 
     private List<Contestants> splitGladiatorsIntoPairs(List<Gladiator> gladiators) {
-
-        return new LinkedList<>();
+        LinkedList<Contestants> gladiatorsInPairs = new LinkedList<>();
+        for (int i = 0; i < gladiators.size(); i += 2) {
+            Contestants contestant = new Contestants(gladiators.get(i), gladiators.get(i + 1));
+            gladiatorsInPairs.add(contestant);
+        }
+        return gladiatorsInPairs;
     }
 
     private Gladiator getChampion(Tournament tournament) {
