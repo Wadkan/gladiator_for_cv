@@ -87,19 +87,19 @@ public class Combat {
             combatLog.add(logMessage);
 
             // check the winner after each turn
-            if (gladiator1.getAvailableHp() < 0) {
+            if (gladiator1.isDead()) {
                 logMessage = String.format("%s has died, %s wins!", gladiator1.getName(), gladiator2.getName());
                 combatLog.add(logMessage);
                 winner = gladiator2;
             }
-            if (gladiator2.getAvailableHp() < 0) {
+            if (gladiator2.isDead()) {
                 logMessage = String.format("%s has died, %s wins!", gladiator2.getName(), gladiator1.getName());
                 combatLog.add(logMessage);
                 winner = gladiator1;
             }
             if (winner != null) {
-                gladiator1.healUp();
-                gladiator2.healUp();
+                winner.healUp();
+                winner.levelUp();
                 return winner;
             }
 
