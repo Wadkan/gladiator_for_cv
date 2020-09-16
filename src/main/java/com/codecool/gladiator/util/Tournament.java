@@ -1,5 +1,6 @@
 package com.codecool.gladiator.util;
 
+import com.codecool.gladiator.model.Combat;
 import com.codecool.gladiator.model.Contestants;
 
 import java.util.List;
@@ -91,17 +92,39 @@ public class Tournament {
      * @param value the value to be added to the tree
      */
     public void add(Contestants value) {
-        contestants = value;
+        this.contestants = value;
         size = 1;
     }
 
-    private void recursiveAdd(Tournament actual, List<Contestants> values) {
-        for (int i = 2; i <= size; i++) {
-            leftBranch = new Tournament(values.get(i - 2));
-            rightBranch = new Tournament(values.get(i - 1));
-        }
+    private void addTwoSubBranch(Tournament mainBranch) {
+        Contestants contestants = null;
+        mainBranch.leftBranch = new Tournament(contestants);
+        mainBranch.rightBranch = new Tournament(contestants);
+        mainBranch.contestants = null;
     }
 
+    private List<Contestants> recursiveAdd(Tournament mainBranch, List<Contestants> values, int n) {
+        Contestants value;
+        Contestants nullContestant = new Contestants(null, null);
+
+        if ((int) Math.pow(2, n) < size) {
+            // PARENT LEVEL(S)
+            value = nullContestant;
+            mainBranch.leftBranch = new Tournament(value);
+            values = recursiveAdd(mainBranch.leftBranch, values, n + 1);
+            mainBranch.rightBranch = new Tournament(value);
+            values = recursiveAdd(mainBranch.rightBranch, values, n + 1);
+        } else {
+            // DEEPEST LEVEL
+            value = values.get(0);
+            values.remove(0);
+            mainBranch.leftBranch = new Tournament(value);
+            value = values.get(0);
+            values.remove(0);
+            mainBranch.rightBranch = new Tournament(value);
+        }
+        return values;
+    }
 
     /**
      * Adds multiple values to the tree
@@ -109,22 +132,27 @@ public class Tournament {
      * @param values the list of values to be added to the tree
      */
     public void addAll(List<Contestants> values) {
-        contestants = null; // this will be the winner at the end
         size = values.size();
-        System.out.println("SIZE ASDFASDF: " + size);
+        left = true;
 
-        recursiveAdd(this, values);
+        values = recursiveAdd(this, values, 1);
 
-
-//        if (size == 2) {
+//        if (size >= 2) {
+//            System.out.println("---> 2");
 //            leftBranch = new Tournament(values.get(0));
 //            rightBranch = new Tournament(values.get(1));
-//        } else if (size == 4) {
+//        }
+//        if (size >= 4) {
+//            System.out.println("---> 4");
 //            leftBranch.leftBranch = new Tournament(values.get(0));
 //            leftBranch.rightBranch = new Tournament(values.get(1));
-//            rightBranch.leftBranch = new Tournament(values.get(3));
-//            rightBranch.rightBranch = new Tournament(values.get(4));
-//        } else if (size == 8) {
+//            rightBranch.leftBranch = new Tournament(values.get(2));
+//            rightBranch.rightBranch = new Tournament(values.get(3));
+//            leftBranch.contestants = null;
+//            rightBranch.contestants = null;
+//        }
+//        if (size >= 8) {
+//            System.out.println("---> 8");
 //            leftBranch.leftBranch.leftBranch = new Tournament(values.get(0));
 //            leftBranch.leftBranch.rightBranch = new Tournament(values.get(1));
 //            leftBranch.rightBranch.leftBranch = new Tournament(values.get(2));
@@ -133,6 +161,35 @@ public class Tournament {
 //            rightBranch.leftBranch.rightBranch = new Tournament(values.get(5));
 //            rightBranch.rightBranch.leftBranch = new Tournament(values.get(6));
 //            rightBranch.rightBranch.rightBranch = new Tournament(values.get(7));
+//
+//            leftBranch.leftBranch.contestants = null;
+//            leftBranch.rightBranch.contestants = null;
+//            rightBranch.leftBranch.contestants = null;
+//            rightBranch.rightBranch.contestants = null;
+//        }
+
+
+//        Tournament currentLevel;
+//        Tournament leftSide;
+//        Tournament rightSide;
+//        boolean continoue = true;
+//
+//        for (int i = 2; i <= size; i++) {
+//            currentLevel = this;
+//            continoue = true;
+//            left = true;
+//            while (continoue) {
+//                for (int multiple = 1; multiple < i; multiple++) {
+//                    if (left) {         // call it for the left side
+//                        currentLevel = currentLevel.leftBranch;
+//                    } else {         // call it for the right side
+//                        currentLevel = currentLevel.rightBranch;
+//                        continoue = false;
+//                    }
+//                }
+//                left = (left == true) ? false : true;
+//                currentLevel = new Tournament(values.get(i++));     // divide main branch and load with contestants
+//            }
 //        }
 
         // left = (left == true) ? false : true;
