@@ -84,9 +84,10 @@ public class Colosseum {
         // Todo - call simulateCombat as many times as needed
 
         int size = tournament.size();
-        doTournamentRecursive(tournament, size);
-
-        // LEVEL 1 – the final
+        if (size > 1) {
+            doTournamentRecursive(tournament, size);
+        }
+        // UPPER LEVEL 1 – the final fight
         Combat combat = new Combat(tournament.getContestants());
         return simulateCombat(combat);
     }
