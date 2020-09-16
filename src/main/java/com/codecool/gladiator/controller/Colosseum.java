@@ -71,21 +71,24 @@ public class Colosseum {
         actualLevel.setContestants(winners);
     }
 
-    private void doTournamentRecursive(Tournament actualLevel, int actualSize) {
-        Contestants actualLeftContestants;
-        Contestants actualRightContestants;
+    private void doTournamentRecursive(Tournament actualLevel) {
+        if (actualLevel.getLeftBranch().getContestants() == null) {
+            doTournamentRecursive(actualLevel.getLeftBranch());
+        } else {
+            doTheCombat(actualLevel);
+        }
 
-//        if(actualLevel.getContestants() == )
+        if (actualLevel.getRightBranch().getContestants() == null) {
+            doTournamentRecursive(actualLevel.getRightBranch());
+        } else {
+            doTheCombat(actualLevel);
+        }
 
-        doTheCombat(actualLevel);
     }
 
     private Gladiator getChampion(Tournament tournament) {
-        // Todo - call simulateCombat as many times as needed
-
-        int size = tournament.size();
-        if (size > 1) {
-            doTournamentRecursive(tournament, size);
+        while (tournament.getContestants() == null) {
+            doTournamentRecursive(tournament);
         }
         // UPPER LEVEL 1 – the final fight
         Combat combat = new Combat(tournament.getContestants());
@@ -97,7 +100,6 @@ public class Colosseum {
         Gladiator gladiator2 = combat.getGladiator2();
         announceCombat(gladiator1, gladiator2);
 
-        // Todo
         Gladiator winner = combat.simulate();
         Gladiator loser = winner == gladiator1 ? gladiator2 : gladiator1;
         displayCombatLog(combat);

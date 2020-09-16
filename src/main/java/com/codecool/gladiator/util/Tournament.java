@@ -104,11 +104,8 @@ public class Tournament {
 
     private List<Contestants> recursiveAdd(Tournament mainBranch, List<Contestants> values, int n) {
         Contestants value;
-//        Contestants nullContestant = new Contestants(null, null);
-
         if ((int) Math.pow(2, n) < size) {
             // PARENT LEVEL(S)
-//            value = nullContestant;
             mainBranch.leftBranch = new Tournament();
             values = recursiveAdd(mainBranch.leftBranch, values, n + 1);
             mainBranch.rightBranch = new Tournament();
@@ -133,8 +130,6 @@ public class Tournament {
     public void addAll(List<Contestants> values) {
         size = values.size();
         left = true;
-
-        values = recursiveAdd(this, values, 1);
-
+        recursiveAdd(this, values, 1);
     }
 }
