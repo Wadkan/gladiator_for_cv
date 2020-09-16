@@ -75,12 +75,9 @@ public class Colosseum {
         Contestants actualLeftContestants;
         Contestants actualRightContestants;
 
-        for (int i = actualSize; i > 1; i--) {
-            if (i == 2) {
-                System.out.println("-------------> SIZE: " + i);
-                doTheCombat(actualLevel);
-            }
-        }
+//        if(actualLevel.getContestants() == )
+
+        doTheCombat(actualLevel);
     }
 
     private Gladiator getChampion(Tournament tournament) {

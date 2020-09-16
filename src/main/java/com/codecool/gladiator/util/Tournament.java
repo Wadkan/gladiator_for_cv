@@ -19,13 +19,19 @@ public class Tournament {
      */
     private boolean left = true;
 
+    public Tournament(){
+        this.contestants = null;
+        size = 0;
+    }
+
     /**
      * Constructor with initial value
      *
      * @param contestants the initial value to be added to the tree
      */
     public Tournament(Contestants contestants) {
-        add(contestants);
+        this.contestants = contestants;
+        size = 1;
     }
 
     /**
@@ -98,14 +104,14 @@ public class Tournament {
 
     private List<Contestants> recursiveAdd(Tournament mainBranch, List<Contestants> values, int n) {
         Contestants value;
-        Contestants nullContestant = new Contestants(null, null);
+//        Contestants nullContestant = new Contestants(null, null);
 
         if ((int) Math.pow(2, n) < size) {
             // PARENT LEVEL(S)
-            value = nullContestant;
-            mainBranch.leftBranch = new Tournament(value);
+//            value = nullContestant;
+            mainBranch.leftBranch = new Tournament();
             values = recursiveAdd(mainBranch.leftBranch, values, n + 1);
-            mainBranch.rightBranch = new Tournament(value);
+            mainBranch.rightBranch = new Tournament();
             values = recursiveAdd(mainBranch.rightBranch, values, n + 1);
         } else {
             // DEEPEST LEVEL
