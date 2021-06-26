@@ -1,3 +1,8 @@
+To use run Main.java and use the CLI.
+The app will create gladiator instances and do the fight, and finally write the results to the console. 
+
+
+
 # Gladiator
 
 ## Story
